@@ -1,0 +1,19 @@
+{
+  "name": "crypto-trader-sim",
+  "version": "1.0.0",
+  "description": "Educational crypto trading simulator with virtual capital — NOT financial advice",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "author": "Maxime AUBURTIN <m@hellomax.io>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.0"
+  }
+}
