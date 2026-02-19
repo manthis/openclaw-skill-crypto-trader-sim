@@ -17,9 +17,28 @@ Backtests strategies on historical data to see hypothetical gains/losses.
 # Analyze market
 ./crypto-trader-sim.sh --analyze --coins BTC --strategy balanced
 
+# Auto-trade mode (for heartbeat — outputs JSON)
+./crypto-trader-sim.sh --auto-trade --coins BTC,ETH,SOL --strategy balanced
+
 # View portfolio
 ./crypto-trader-sim.sh --portfolio
 ```
+
+## Auto-Trade Mode (Heartbeat)
+The `--auto-trade` flag is designed for automated heartbeat execution:
+- Loads portfolio from `state/portfolio.json`
+- Fetches real-time market data & computes indicators
+- Executes BUY/SELL trades automatically based on strategy signals
+- Checks stop-loss / take-profit on existing positions
+- Persists updated portfolio to `state/portfolio.json`
+- Outputs JSON with trades executed and portfolio summary
+- Logs to `logs/auto-trade-YYYY-MM-DD.log`
+
+**Safety rules:**
+- No double-trade on same coin (skip if already holding)
+- Keeps €10 capital reserve minimum
+- Position sizing respects strategy limits (5-50% depending on strategy)
+- Stop-loss and take-profit auto-triggered
 
 ## Strategies
 - **conservative** — Needs strong consensus, small positions (20% max), tight stop-loss (5%)
