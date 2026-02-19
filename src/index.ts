@@ -13,6 +13,7 @@ import { loadPortfolio, savePortfolio, executeTrade, formatPortfolio } from './p
 import { runSimulation, formatResult } from './simulator';
 import { log, setVerbose, setLogFile } from './utils/logger';
 import { runAutoTrade } from './auto-trader';
+import { runAutoDiscover } from './auto-discover';
 
 // Load config.env if present
 const envFile = path.join(__dirname, '../config.env');
