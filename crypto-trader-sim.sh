@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # ⚠️ EDUCATIONAL CRYPTO TRADING SIMULATOR — NOT FINANCIAL ADVICE
 # Usage: crypto-trader-sim.sh --strategy conservative --capital 100 --coins BTC,ETH,SOL --simulate 30d
+#        crypto-trader-sim.sh --auto-trade --coins BTC,ETH,SOL --strategy balanced
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"

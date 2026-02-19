@@ -12,6 +12,7 @@ import { getMarketChart, getPrices } from './api/coingecko';
 import { loadPortfolio, savePortfolio, executeTrade, formatPortfolio } from './portfolio';
 import { runSimulation, formatResult } from './simulator';
 import { log, setVerbose, setLogFile } from './utils/logger';
+import { runAutoTrade } from './auto-trader';
 
 // Load config.env if present
 const envFile = path.join(__dirname, '../config.env');
@@ -44,12 +45,14 @@ function printHelp() {
 Usage:
   crypto-trader-sim --simulate <days>d --strategy <name> --capital <eur> --coins <list>
   crypto-trader-sim --analyze --coins <list> [--strategy <name>]
+  crypto-trader-sim --auto-trade --coins <list> [--strategy <name>]
   crypto-trader-sim --portfolio
   crypto-trader-sim --signals --coins <list>
 
 Commands:
   --simulate <N>d   Run backtest simulation over N days
   --analyze         Analyze current market conditions
+  --auto-trade      Auto-trade mode (for heartbeat): analyze & execute trades
   --signals         Show current BUY/SELL/HOLD signals
   --portfolio       Show current virtual portfolio
 
@@ -69,6 +72,7 @@ Examples:
   crypto-trader-sim --simulate 30d --strategy conservative --capital 100 --coins BTC,ETH,SOL
   crypto-trader-sim --analyze --coins BTC,ETH --strategy balanced
   crypto-trader-sim --signals --coins BTC,SOL
+  crypto-trader-sim --auto-trade --coins BTC,ETH,SOL --strategy balanced
   crypto-trader-sim --portfolio
 
 ⚠️ This is a SIMULATION with virtual money. NOT financial advice.
@@ -167,6 +171,12 @@ async function main() {
     const resultFile = path.join(__dirname, '../state/last-simulation.json');
     fs.writeFileSync(resultFile, JSON.stringify(result, null, 2));
     log('info', `Results saved to ${resultFile}`);
+  }
+
+  else if (args['auto-trade']) {
+    const result = await runAutoTrade(coins, strategyName, capital);
+    // Output JSON for wrapper/heartbeat consumption
+    console.log(JSON.stringify(result, null, 2));
   }
 
   else if (args.analyze) {
